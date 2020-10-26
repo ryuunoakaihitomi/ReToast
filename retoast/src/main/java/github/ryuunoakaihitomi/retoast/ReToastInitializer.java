@@ -8,11 +8,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RestrictTo;
+
 /**
  * <b>NOT FOR USE BY OUTSIDE.</b>
  * <p>
  * It must be public in order to initialize {@link ReToast} automatically.
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 public final class ReToastInitializer extends ContentProvider {
 
     private static final String TAG = "ReToastInitializer";
@@ -23,7 +26,7 @@ public final class ReToastInitializer extends ContentProvider {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context.getApplicationInfo().minSdkVersion > Build.VERSION_CODES.P) {
             throw new UnsupportedOperationException("ReToast is no longer useful after API Level 28! Please remove the library.");
         } else {
-            Log.d(TAG, "onCreate: Loading ReToast in " + context.getPackageName());
+            Log.i(TAG, "onCreate: ReToast! " + context.getPackageName());
             ReToast.install();
         }
         return true;

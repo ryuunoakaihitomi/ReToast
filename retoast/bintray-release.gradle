@@ -7,27 +7,7 @@ group = PROJ_GROUP
 version = PROJ_VERSION
 project.archivesBaseName = PROJ_ARTIFACT_ID
 
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: 'javadoc') {
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    archiveClassifier.set('sources')
-}
-
 afterEvaluate {
-    javadoc.classpath += files(android.libraryVariants.collect { variant ->
-        variant.getJavaCompileProvider().get().classpath.files
-    })
-
     publishing {
         publications {
             release(MavenPublication) {
@@ -35,9 +15,6 @@ afterEvaluate {
                 groupId = PROJ_GROUP
                 artifactId = PROJ_ARTIFACT_ID
                 version = PROJ_VERSION
-
-                artifact javadocJar
-                artifact sourcesJar
 
                 pom {
                     description = PROJ_DESCRIPTION
@@ -79,7 +56,6 @@ bintray {
 
     dryRun = false
     publish = true
-//    override = true
 
     pkg {
         repo = 'maven'

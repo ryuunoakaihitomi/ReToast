@@ -40,7 +40,7 @@ final class ReToast {
                                 if ("enqueueToast".equals(method.getName())) {
                                     // duration: LENGTH_SHORT = 0; LENGTH_LONG = 1;
                                     int duration = (int) args[2];
-                                    Log.d(TAG, args[0] + " is going to show a " + (duration == 0 ? "short" : "long") + " toast.");
+                                    Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == 0 ? "short" : "long"));
                                     args[0] = "android";
                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                         Object tn = args[1];
@@ -70,10 +70,22 @@ final class ReToast {
             mHandler = handler;
         }
 
+        private static String getToastActionString(int action) {
+            switch (action) {
+                case 0:
+                    return "show";
+                case 1:
+                    return "hide";
+                case 2:
+                    return "cancel";
+            }
+            return Integer.toString(action);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             // SHOW = 0; HIDE = 1; CANCEL = 2;
-            Log.d(TAG, "handleMessage: action = " + msg.what);
+            Log.d(TAG, "handleMessage: action = " + getToastActionString(msg.what));
             try {
                 mHandler.handleMessage(msg);
             } catch (WindowManager.BadTokenException e) {
