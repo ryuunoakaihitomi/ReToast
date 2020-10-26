@@ -22,7 +22,7 @@ Unlike them, this library is globally effective to make less invasine. We can do
 
 ## Usage
 
-[ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg?version=1.0.0) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/1.0.0/link)
+[ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/_latestVersion)
 
 module-level build.gradle:
 
