@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <Button
+        android:id="@+id/btn_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toast" />
+
+    <Button
+        android:id="@+id/btn_sticky_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sticky Toast" />
+
+    <Button
+        android:id="@+id/btn_disable_rt"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Disable ReToast"
+        android:textColor="@android:color/holo_orange_dark" />
+
+</LinearLayout>

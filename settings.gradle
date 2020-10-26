@@ -1,0 +1,3 @@
+include ':retoast'
+include ':demo'
+rootProject.name = "ReToast"
