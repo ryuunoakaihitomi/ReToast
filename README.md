@@ -14,7 +14,7 @@ This Android library is used to fix two serious bugs of `android.widget.Toast` w
 
 [Toast with UI stress causes crash. (BadTokenException)](https://android.googlesource.com/platform/frameworks/base/+/0df3702f533667a3825ecbce67db0853385a99ab)
 
-**Why not use other library?**
+**Why not use other libraries?**
 
 Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large project.
 
