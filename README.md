@@ -33,4 +33,4 @@ dependencies {
     ...
 ```
 
-**THAT'S ALL!** We can use `android.widget.Toast` or other fancy Toast-based libraries as before, but there's no need to worry about the bugs anymore.
+**THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast) or other fancy Toast-based libraries as before, but there's no need to worry about the bugs anymore.
