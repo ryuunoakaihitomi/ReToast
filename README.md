@@ -12,13 +12,14 @@ This Android library is used to fix two serious bugs of `android.widget.Toast` w
 
 * 7.1 (25)
 
-[Toast with UI stress causes crash.](https://android.googlesource.com/platform/frameworks/base/+/0df3702f533667a3825ecbce67db0853385a99ab)
+[Toast with UI stress causes crash. (BadTokenException)](https://android.googlesource.com/platform/frameworks/base/+/0df3702f533667a3825ecbce67db0853385a99ab)
 
 **Why not use other library?**
 
 Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large project.
 
-Unlike them, this library is globally effective to make less invasine. We can do all our work just like before.
+Unlike them, this library is globally effective and uses [`ContentProvider.onCreate()`](https://developer.android.com/reference/android/content/ContentProvider#onCreate()) to automatically initialize in order to make less invasine.
+We can continue doing all our work just like before.
 
 ## Usage
 
@@ -31,3 +32,5 @@ dependencies {
     implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
     ...
 ```
+
+**THAT'S ALL!** We can use `android.widget.Toast` or other fancy Toast-based libraries as before, but there's no need to worry about the bugs anymore.
