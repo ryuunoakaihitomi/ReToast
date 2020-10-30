@@ -9,6 +9,7 @@ This Android library is used to fix two serious bugs of `android.widget.Toast` w
 * before 10 (29)
 
 [Toasts are disabled if notifications are disabled for an app.](https://issuetracker.google.com/issues/36951147)
+
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
 * 7.1 (25)
