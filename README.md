@@ -6,19 +6,19 @@ This Android library is used to fix two serious bugs of `android.widget.Toast` w
 
 **What bugs does it fix?**
 
-* before 10 (29)
+* #1: before 10 (29)
 
 [Toasts are disabled if notifications are disabled for an app.](https://issuetracker.google.com/issues/36951147)
 
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
-* 7.1 (25)
+* #2: 7.1 (25)
 
 [Toast with UI stress causes crash (BadTokenException).](https://android.googlesource.com/platform/frameworks/base/+/0df3702f533667a3825ecbce67db0853385a99ab)
 
 **Why not use other libraries?**
 
-Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large project.
+Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large projects.
 
 Unlike them, this library is globally effective and uses [`ContentProvider.onCreate()`](https://developer.android.com/reference/android/content/ContentProvider#onCreate()) to automatically initialize in order to make less invasive.
 We can continue doing all our work just like before.
