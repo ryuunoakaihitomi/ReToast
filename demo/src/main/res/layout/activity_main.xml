@@ -14,10 +14,10 @@
         android:text="Toast" />
 
     <Button
-        android:id="@+id/btn_sticky_toast"
+        android:id="@+id/btn_stuck_toast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sticky Toast" />
+        android:text="Stuck Toast" />
 
     <Button
         android:id="@+id/btn_disable_rt"

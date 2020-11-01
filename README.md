@@ -1,5 +1,7 @@
 # ReToast
 
+[ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/_latestVersion)
+
 This Android library is used to fix two serious bugs of `android.widget.Toast` with the easiest way.
 
 ## Introduction
@@ -25,9 +27,7 @@ We can continue doing all our work just like before.
 
 ## Usage
 
-[ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/_latestVersion)
-
-module-level build.gradle:
+Import the library in app(module-level) build.gradle:
 
 ```groovy
 dependencies {
@@ -39,4 +39,4 @@ dependencies {
 
 ## Compatibility
 
-If the app's minSdkVersion >= API Level 29/(Android Q/10), it's almost impossible to encounter these bugs(fixed). We'd better remove ReToast from the app.
+If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs(fixed). We'd better remove ReToast from the app.

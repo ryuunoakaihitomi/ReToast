@@ -20,16 +20,17 @@ public class MainActivity extends Activity {
 
         final Button
                 toastBtn = findViewById(R.id.btn_toast),
-                stickyToastBtn = findViewById(R.id.btn_sticky_toast),
+                stuckToastBtn = findViewById(R.id.btn_stuck_toast),
                 disableReToastBrn = findViewById(R.id.btn_disable_rt);
 
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.N_MR1) {
-            stickyToastBtn.setEnabled(false);
+            stuckToastBtn.setEnabled(false);
         }
 
         toastBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Try to disable notification permission and see what happens.", Toast.LENGTH_LONG).show());
-        stickyToastBtn.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "An invisible toast.", Toast.LENGTH_SHORT).show();
+        // The way to trigger BadTokenException.
+        stuckToastBtn.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "A stuck toast.", Toast.LENGTH_SHORT).show();
             SystemClock.sleep(3_000);
         });
         disableReToastBrn.setOnClickListener(v -> {

@@ -1,8 +1,11 @@
 package github.ryuunoakaihitomi.retoast;
 
+import android.content.ComponentName;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -23,7 +26,12 @@ public final class ReToastInitializer extends ContentProvider {
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context.getApplicationInfo().minSdkVersion > Build.VERSION_CODES.P) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && applicationInfo.minSdkVersion > Build.VERSION_CODES.P) {
+            if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
+                Log.w(TAG, "onCreate: Disable me on the release version when minSdkVersion > 28.");
+                context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, this.getClass()), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+            }
             throw new UnsupportedOperationException("ReToast is no longer useful after API Level 28! Please remove the library.");
         } else {
             Log.i(TAG, "onCreate: Re:Toast - " + context.getPackageName());

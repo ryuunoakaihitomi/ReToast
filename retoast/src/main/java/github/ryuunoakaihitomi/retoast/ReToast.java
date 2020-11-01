@@ -27,7 +27,6 @@ final class ReToast {
                 @SuppressLint("DiscouragedPrivateApi")
                 Method getService = Toast.class.getDeclaredMethod("getService");
                 getService.setAccessible(true);
-                // Do not be inline to avoid endless loop.
                 final Object iNotificationManager = getService.invoke(null);
                 @SuppressLint("PrivateApi")
                 Object iNotificationManagerProxy = Proxy.newProxyInstance(
@@ -46,7 +45,7 @@ final class ReToast {
                                         Object tn = args[1];
                                         Field mHandler = tn.getClass().getDeclaredField("mHandler");
                                         mHandler.setAccessible(true);
-                                        mHandler.set(tn, new HandlerProxy((Handler) mHandler.get(tn)));
+                                        mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
                                     }
                                 }
                                 return method.invoke(iNotificationManager, args);
@@ -62,15 +61,15 @@ final class ReToast {
         }
     }
 
-    private static final class HandlerProxy extends Handler {
+    private static final class SafeHandlerProxy extends Handler {
         private final Handler mHandler;
 
         @SuppressWarnings("deprecation") // since 30
-        public HandlerProxy(Handler handler) {
+        public SafeHandlerProxy(Handler handler) {
             mHandler = handler;
         }
 
-        private static String getToastActionString(int action) {
+        private static String getActionString(int action) {
             switch (action) {
                 case 0:
                     return "show";
@@ -85,7 +84,7 @@ final class ReToast {
         @Override
         public void handleMessage(Message msg) {
             // SHOW = 0; HIDE = 1; CANCEL = 2;
-            Log.d(TAG, "handleMessage: action = " + getToastActionString(msg.what));
+            Log.d(TAG, "handleMessage: action = " + getActionString(msg.what));
             try {
                 mHandler.handleMessage(msg);
             } catch (WindowManager.BadTokenException e) {
