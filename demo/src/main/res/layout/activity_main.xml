@@ -20,12 +20,18 @@
         android:text="Stuck Toast" />
 
     <Button
+        android:id="@+id/btn_background_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="debug: Background Toast" />
+
+    <Button
         android:id="@+id/btn_disable_rt"
         style="?android:attr/buttonBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Disable ReToast"
+        android:text="debug: Disable ReToast"
         android:textColor="@android:color/holo_orange_dark" />
 
 </LinearLayout>

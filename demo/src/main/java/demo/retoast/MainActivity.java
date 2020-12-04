@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
         final Button
                 toastBtn = findViewById(R.id.btn_toast),
                 stuckToastBtn = findViewById(R.id.btn_stuck_toast),
+                bgToastBtn = findViewById(R.id.btn_background_toast),
                 disableReToastBrn = findViewById(R.id.btn_disable_rt);
 
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.N_MR1) {
@@ -33,6 +34,11 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "A stuck toast.", Toast.LENGTH_SHORT).show();
             SystemClock.sleep(3_000);
         });
+        Toast bgToast = Toast.makeText(this, "Background Toast", Toast.LENGTH_SHORT);
+        bgToastBtn.setOnClickListener(v -> new Thread(() -> {
+            SystemClock.sleep(1_000);
+            bgToast.show();
+        }).start());
         disableReToastBrn.setOnClickListener(v -> {
             // The way to DISABLE ReToast without removing the library. WE SHOULD NOT DO THIS!
             getPackageManager().setComponentEnabledSetting(

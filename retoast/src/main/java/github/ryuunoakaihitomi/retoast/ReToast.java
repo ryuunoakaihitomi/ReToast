@@ -3,6 +3,7 @@ package github.ryuunoakaihitomi.retoast;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
@@ -33,7 +34,6 @@ final class ReToast {
                         Thread.currentThread().getContextClassLoader(),
                         new Class[]{Class.forName("android.app.INotificationManager")},
                         new InvocationHandler() {
-
                             @Override
                             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                                 if ("enqueueToast".equals(method.getName())) {
@@ -42,10 +42,25 @@ final class ReToast {
                                     Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == 0 ? "short" : "long"));
                                     args[0] = "android";
                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
-                                        Object tn = args[1];
-                                        Field mHandler = tn.getClass().getDeclaredField("mHandler");
+                                        final Object tn = args[1];
+                                        final Field mHandler = tn.getClass().getDeclaredField("mHandler");
                                         mHandler.setAccessible(true);
-                                        mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
+                                        Looper mainLooper = Looper.getMainLooper();
+                                        if (!mainLooper.isCurrentThread()) {
+                                            Log.w(TAG, "Toast.show() is not in main thread.");
+                                            new Handler(mainLooper).post(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
+                                                    } catch (IllegalAccessException e) {
+                                                        Log.e(TAG, null, e);
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
+                                        }
                                     }
                                 }
                                 return method.invoke(iNotificationManager, args);
