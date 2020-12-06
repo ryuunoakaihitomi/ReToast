@@ -11,14 +11,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RestrictTo;
-
 /**
- * <b>NOT FOR USE BY OUTSIDE.</b>
+ * <b>We should never use it directly!</b> It is not for developers.
  * <p>
  * It must be public in order to initialize {@link ReToast} automatically.
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 public final class ReToastInitializer extends ContentProvider {
 
     private static final String TAG = "ReToastInitializer";

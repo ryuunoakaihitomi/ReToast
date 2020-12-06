@@ -21,10 +21,10 @@ final class ReToast {
     private ReToast() {
     }
 
+    @SuppressWarnings("JavaReflectionMemberAccess")
     static void install() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             try {
-                @SuppressWarnings("JavaReflectionMemberAccess")
                 @SuppressLint("DiscouragedPrivateApi")
                 Method getService = Toast.class.getDeclaredMethod("getService");
                 getService.setAccessible(true);
@@ -51,28 +51,31 @@ final class ReToast {
                                             new Handler(mainLooper).post(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    try {
-                                                        mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
-                                                    } catch (IllegalAccessException e) {
-                                                        Log.e(TAG, null, e);
-                                                    }
+                                                    replaceSafeHandler(tn, mHandler);
                                                 }
                                             });
                                         } else {
-                                            mHandler.set(tn, new SafeHandlerProxy((Handler) mHandler.get(tn)));
+                                            replaceSafeHandler(tn, mHandler);
                                         }
                                     }
                                 }
                                 return method.invoke(iNotificationManager, args);
                             }
                         });
-                @SuppressWarnings("JavaReflectionMemberAccess")
                 Field sService = Toast.class.getDeclaredField("sService");
                 sService.setAccessible(true);
                 sService.set(null, iNotificationManagerProxy);
             } catch (Throwable e) {
-                Log.e(TAG, null, e);
+                Log.e(TAG, "install", e);
             }
+        }
+    }
+
+    private static void replaceSafeHandler(Object tn, Field handler) {
+        try {
+            handler.set(tn, new SafeHandlerProxy((Handler) handler.get(tn)));
+        } catch (IllegalAccessException e) {
+            Log.e(TAG, "replaceSafeHandler", e);
         }
     }
 
