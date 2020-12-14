@@ -27,7 +27,7 @@ public final class ReToastInitializer extends ContentProvider {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && applicationInfo.minSdkVersion > Build.VERSION_CODES.P) {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
                 Log.w(TAG, "onCreate: Disable me on the release version when minSdkVersion > 28.");
-                context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, this.getClass()), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, getClass()), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
             }
             throw new UnsupportedOperationException("ReToast is no longer useful after API Level 28! Please remove the library.");
         } else {
