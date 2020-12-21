@@ -47,15 +47,15 @@ final class ReToast {
                                         mHandler.setAccessible(true);
                                         Looper mainLooper = Looper.getMainLooper();
                                         if (!mainLooper.isCurrentThread()) {
-                                            Log.w(TAG, "Toast.show() is not in main thread.");
+                                            Log.i(TAG, "Toast.show() is not in main thread.");
                                             new Handler(mainLooper).post(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    replaceSafeHandler(tn, mHandler);
+                                                    replaceTnHandler(tn, mHandler);
                                                 }
                                             });
                                         } else {
-                                            replaceSafeHandler(tn, mHandler);
+                                            replaceTnHandler(tn, mHandler);
                                         }
                                     }
                                 }
@@ -71,11 +71,11 @@ final class ReToast {
         }
     }
 
-    private static void replaceSafeHandler(Object tn, Field handler) {
+    private static void replaceTnHandler(Object tn, Field handler) {
         try {
             handler.set(tn, new SafeHandlerProxy((Handler) handler.get(tn)));
         } catch (IllegalAccessException e) {
-            Log.e(TAG, "replaceSafeHandler", e);
+            Log.e(TAG, "replaceTnHandler", e);
         }
     }
 
@@ -88,6 +88,7 @@ final class ReToast {
         }
 
         private static String getActionString(int action) {
+            // SHOW = 0; HIDE = 1; CANCEL = 2;
             switch (action) {
                 case 0:
                     return "show";
@@ -101,7 +102,6 @@ final class ReToast {
 
         @Override
         public void handleMessage(Message msg) {
-            // SHOW = 0; HIDE = 1; CANCEL = 2;
             Log.d(TAG, "handleMessage: action = " + getActionString(msg.what));
             try {
                 mHandler.handleMessage(msg);
