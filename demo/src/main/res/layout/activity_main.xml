@@ -14,6 +14,12 @@
         android:text="Toast" />
 
     <Button
+        android:id="@+id/btn_crowded_toasts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crowded Toasts" />
+
+    <Button
         android:id="@+id/btn_stuck_toast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

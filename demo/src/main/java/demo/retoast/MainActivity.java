@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 
         final Button
                 toastBtn = findViewById(R.id.btn_toast),
+                crowdedToastsBtn = findViewById(R.id.btn_crowded_toasts),
                 stuckToastBtn = findViewById(R.id.btn_stuck_toast),
                 bgToastBtn = findViewById(R.id.btn_background_toast),
                 disableReToastBrn = findViewById(R.id.btn_disable_rt);
@@ -29,6 +30,13 @@ public class MainActivity extends Activity {
         }
 
         toastBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Try to disable notification permission and see what happens.", Toast.LENGTH_LONG).show());
+        // Test rate limit.
+        crowdedToastsBtn.setOnClickListener(v -> {
+            final int count = 5;
+            for (int i = 0; i < count; i++) {
+                Toast.makeText(v.getContext(), "Toast #" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
         // The way to trigger BadTokenException.
         stuckToastBtn.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "A stuck toast.", Toast.LENGTH_SHORT).show();
