@@ -32,8 +32,7 @@ public class MainActivity extends Activity {
         toastBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Try to disable notification permission and see what happens.", Toast.LENGTH_LONG).show());
         // Test rate limit.
         crowdedToastsBtn.setOnClickListener(v -> {
-            final int count = 5;
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < 5; i++) {
                 Toast.makeText(v.getContext(), "Toast #" + i, Toast.LENGTH_SHORT).show();
             }
         });
