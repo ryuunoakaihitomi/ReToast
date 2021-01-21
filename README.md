@@ -14,7 +14,7 @@ This Android library is used to fix two serious bugs of `android.widget.Toast` w
 
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
-* from 8.1(27) to 9.0(28): Toast Rate Limit
+* from 8.1(27) to 9.0(28): Rate Limit
 
 [Each package can enqueue one toast at a time.](https://android.googlesource.com/platform/frameworks/base/+/4ee785b698211b5ccce104e226b073ffbb12df55)
 
