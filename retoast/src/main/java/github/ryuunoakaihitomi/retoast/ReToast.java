@@ -1,11 +1,14 @@
 package github.ryuunoakaihitomi.retoast;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -43,19 +46,17 @@ final class ReToast {
                                     args[0] = "android";
                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                         final Object tn = args[1];
-                                        final Field mHandler = tn.getClass().getDeclaredField("mHandler");
-                                        mHandler.setAccessible(true);
                                         Looper mainLooper = Looper.getMainLooper();
                                         if (!mainLooper.isCurrentThread()) {
                                             Log.i(TAG, "Toast.show() is not in main thread.");
                                             new Handler(mainLooper).post(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    replaceTnHandler(tn, mHandler);
+                                                    hookTn(tn);
                                                 }
                                             });
                                         } else {
-                                            replaceTnHandler(tn, mHandler);
+                                            hookTn(tn);
                                         }
                                     }
                                 }
@@ -71,19 +72,24 @@ final class ReToast {
         }
     }
 
-    private static void replaceTnHandler(Object tn, Field handler) {
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void hookTn(Object tn) {
         try {
-            handler.set(tn, new SafeHandlerProxy((Handler) handler.get(tn)));
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "replaceTnHandler", e);
+            final Field mHandler = tn.getClass().getDeclaredField("mHandler");
+            mHandler.setAccessible(true);
+            mHandler.set(tn, new SafeHandlerProxy(tn, (Handler) mHandler.get(tn)));
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Log.e(TAG, "hookTn", e);
         }
     }
 
     private static final class SafeHandlerProxy extends Handler {
+        private final Object mAssociatedTn;
         private final Handler mHandler;
 
         @SuppressWarnings("deprecation") // since 30
-        public SafeHandlerProxy(Handler handler) {
+        public SafeHandlerProxy(Object tn, Handler handler) {
+            mAssociatedTn = tn;
             mHandler = handler;
         }
 
@@ -100,9 +106,23 @@ final class ReToast {
             return Integer.toString(action);
         }
 
+        private void logUnsafeContext() {
+            try {
+                final Field mNextView = mAssociatedTn.getClass().getDeclaredField("mNextView");
+                mNextView.setAccessible(true);
+                final View nextView = (View) mNextView.get(mAssociatedTn);
+                if (nextView != null && nextView.getContext() instanceof Activity) {
+                    Log.w(TAG, "Consider using application instead of activity as context to prevent memory leak.");
+                }
+            } catch (Exception e) {
+                Log.v(TAG, "logUnsafeContext", e);
+            }
+        }
+
         @Override
         public void handleMessage(Message msg) {
             Log.d(TAG, "handleMessage: action = " + getActionString(msg.what));
+            logUnsafeContext();
             try {
                 mHandler.handleMessage(msg);
             } catch (WindowManager.BadTokenException e) {

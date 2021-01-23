@@ -3,7 +3,6 @@ package demo.retoast;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.Button;
@@ -25,25 +24,21 @@ public class MainActivity extends Activity {
                 bgToastBtn = findViewById(R.id.btn_background_toast),
                 disableReToastBrn = findViewById(R.id.btn_disable_rt);
 
-        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.N_MR1) {
-            stuckToastBtn.setEnabled(false);
-        }
-
         toastBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Try to disable notification permission and see what happens.", Toast.LENGTH_LONG).show());
         // Test rate limit.
         crowdedToastsBtn.setOnClickListener(v -> {
             for (int i = 0; i < 5; i++) {
-                Toast.makeText(v.getContext(), "Toast #" + i, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), "Toast #" + i, Toast.LENGTH_SHORT).show();
             }
         });
         // The way to trigger BadTokenException.
         stuckToastBtn.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "A stuck toast.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "A stuck toast.", Toast.LENGTH_SHORT).show();
             SystemClock.sleep(3_000);
         });
-        Toast bgToast = Toast.makeText(this, "Background Toast", Toast.LENGTH_SHORT);
+        Toast bgToast = Toast.makeText(getApplication(), "Background Toast", Toast.LENGTH_SHORT);
         bgToastBtn.setOnClickListener(v -> new Thread(() -> {
-            SystemClock.sleep(1_000);
+            SystemClock.sleep(5_000);
             bgToast.show();
         }).start());
         disableReToastBrn.setOnClickListener(v -> {
