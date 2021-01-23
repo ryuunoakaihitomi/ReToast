@@ -2,7 +2,7 @@
 
 [ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/_latestVersion)
 
-This Android library is used to fix two serious bugs of `android.widget.Toast` with the easiest way.
+This Android library is used to fix some serious bugs of `android.widget.Toast` with the easiest way.
 
 ## Introduction
 
