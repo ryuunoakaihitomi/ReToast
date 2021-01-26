@@ -112,7 +112,9 @@ final class ReToast {
                 mNextView.setAccessible(true);
                 final View nextView = (View) mNextView.get(mAssociatedTn);
                 if (nextView != null && nextView.getContext() instanceof Activity) {
-                    Log.w(TAG, "Consider using application instead of activity as context to prevent memory leak.");
+                    Log.w(TAG, "Consider using application instead of activity(" +
+                            ((Activity) nextView.getContext()).getLocalClassName() +
+                            ") as context to prevent memory leak.");
                 }
             } catch (Exception e) {
                 Log.v(TAG, "logUnsafeContext", e);
