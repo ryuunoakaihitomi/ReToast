@@ -10,8 +10,6 @@ This Android library is used to fix some serious bugs of `android.widget.Toast` 
 
 * before 10 (29): Notification Permission
 
-[Toasts are disabled if notifications are disabled for an app.](https://issuetracker.google.com/issues/36951147)
-
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
 * from 8.1(27) to 9.0(28): Rate Limit
