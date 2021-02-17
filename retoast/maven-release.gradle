@@ -1,5 +1,5 @@
 // gradle task: publish
-// (Dir: local-repo)
+// (Dir: local-mvn-repo)
 
 apply plugin: 'maven-publish'
 
@@ -43,6 +43,6 @@ afterEvaluate {
                 }
             }
         }
-        repositories { maven { url './../local-repo' } }
+        repositories { maven { url './../local-mvn-repo' } }
     }
 }

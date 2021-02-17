@@ -26,6 +26,7 @@ public final class Initializer extends ContentProvider {
         final ApplicationInfo applicationInfo = context.getApplicationInfo();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && applicationInfo.minSdkVersion > Build.VERSION_CODES.P) {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
+                Log.w(TAG, "onCreate: Disable ReToast on the release version.");
                 context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, getClass()), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
             }
             throw new UnsupportedOperationException("ReToast is no longer useful when minSdkVersion > 28! Please remove the library.");
