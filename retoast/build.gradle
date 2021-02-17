@@ -18,4 +18,4 @@ android {
     }
 }
 
-apply from: 'bintray-release.gradle'
+apply from: 'maven-release.gradle'

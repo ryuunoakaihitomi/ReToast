@@ -27,5 +27,4 @@ android {
 
 dependencies {
     implementation project(':retoast')
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 }

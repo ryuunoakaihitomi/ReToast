@@ -8,7 +8,7 @@ import android.os.SystemClock;
 import android.widget.Button;
 import android.widget.Toast;
 
-import github.ryuunoakaihitomi.retoast.ReToastInitializer;
+import github.ryuunoakaihitomi.retoast.Initializer;
 
 public class MainActivity extends Activity {
 
@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
         disableReToastBrn.setOnClickListener(v -> {
             // The way to DISABLE ReToast without removing the library. WE SHOULD NOT DO THIS!
             getPackageManager().setComponentEnabledSetting(
-                    new ComponentName(getApplication(), ReToastInitializer.class),
+                    new ComponentName(getApplication(), Initializer.class),
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
         });

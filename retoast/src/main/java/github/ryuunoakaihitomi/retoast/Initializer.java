@@ -16,20 +16,19 @@ import android.util.Log;
  * <p>
  * It must be public in order to initialize {@link ReToast} automatically.
  */
-public final class ReToastInitializer extends ContentProvider {
+public final class Initializer extends ContentProvider {
 
-    private static final String TAG = "ReToastInitializer";
+    private static final String TAG = "Initializer";
 
     @Override
     public boolean onCreate() {
-        Context context = getContext();
-        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        final Context context = getContext();
+        final ApplicationInfo applicationInfo = context.getApplicationInfo();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && applicationInfo.minSdkVersion > Build.VERSION_CODES.P) {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
-                Log.w(TAG, "onCreate: Disable me on the release version when minSdkVersion > 28.");
                 context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, getClass()), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
             }
-            throw new UnsupportedOperationException("ReToast is no longer useful after API Level 28! Please remove the library.");
+            throw new UnsupportedOperationException("ReToast is no longer useful when minSdkVersion > 28! Please remove the library.");
         } else {
             Log.i(TAG, "onCreate: Re:Toast - " + context.getPackageName());
             ReToast.install();

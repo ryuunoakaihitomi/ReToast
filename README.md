@@ -1,7 +1,5 @@
 # ReToast
 
-[ ![Download](https://api.bintray.com/packages/ryuunoakaihitomi/maven/retoast/images/download.svg) ](https://bintray.com/ryuunoakaihitomi/maven/retoast/_latestVersion)
-
 This Android library is used to fix some serious bugs of `android.widget.Toast` with the easiest way.
 
 ## Introduction
@@ -35,6 +33,11 @@ Import the library in app(module-level) build.gradle:
 
 ```groovy
 dependencies {
+    repositories {
+        maven {
+            url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master'
+        }
+    }
     implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
     ...
 ```
