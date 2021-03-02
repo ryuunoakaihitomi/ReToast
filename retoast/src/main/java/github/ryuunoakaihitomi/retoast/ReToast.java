@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 final class ReToast {
 
@@ -39,26 +40,37 @@ final class ReToast {
                         new InvocationHandler() {
                             @Override
                             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                                if ("enqueueToast".equals(method.getName())) {
-                                    // duration: LENGTH_SHORT = 0; LENGTH_LONG = 1;
-                                    int duration = (int) args[2];
-                                    Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == 0 ? "short" : "long"));
-                                    args[0] = "android";
-                                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
-                                        final Object tn = args[1];
-                                        Looper mainLooper = Looper.getMainLooper();
-                                        if (!mainLooper.isCurrentThread()) {
-                                            Log.i(TAG, "Toast.show() is not in main thread.");
-                                            new Handler(mainLooper).post(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    hookTn(tn);
-                                                }
-                                            });
-                                        } else {
-                                            hookTn(tn);
+                                final String methodName = method.getName(), sysPkgName = "android";
+                                switch (methodName) {
+                                    case "cancelToast":
+                                        args[0] = sysPkgName;
+                                        break;
+                                    case "enqueueToast":
+                                        // duration: LENGTH_SHORT = 0; LENGTH_LONG = 1;
+                                        int duration = (int) args[2];
+                                        Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == 0 ? "short" : "long"));
+                                        args[0] = sysPkgName;
+                                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
+                                            final Object tn = args[1];
+                                            Looper mainLooper = Looper.getMainLooper();
+                                            if (!mainLooper.isCurrentThread()) {
+                                                Log.i(TAG, "Toast.show() is not in main thread.");
+                                                new Handler(mainLooper).post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        hookTn(tn);
+                                                    }
+                                                });
+                                            } else {
+                                                hookTn(tn);
+                                            }
                                         }
-                                    }
+                                        break;
+                                    default:
+                                        if (BuildConfig.DEBUG) {
+                                            Log.d(TAG, "proxy: methodName = " + methodName +
+                                                    ", param = " + Arrays.toString(args));
+                                        }
                                 }
                                 return method.invoke(iNotificationManager, args);
                             }
