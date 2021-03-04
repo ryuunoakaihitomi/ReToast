@@ -48,7 +48,7 @@ final class ReToast {
                                     case "enqueueToast":
                                         // duration: LENGTH_SHORT = 0; LENGTH_LONG = 1;
                                         int duration = (int) args[2];
-                                        Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == 0 ? "short" : "long"));
+                                        Log.d(TAG, "pkg = " + args[0] + ", duration = " + (duration == Toast.LENGTH_SHORT ? "short" : "long"));
                                         args[0] = sysPkgName;
                                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                             final Object tn = args[1];
@@ -69,7 +69,7 @@ final class ReToast {
                                     default:
                                         if (BuildConfig.DEBUG) {
                                             Log.d(TAG, "proxy: methodName = " + methodName +
-                                                    ", param = " + Arrays.toString(args));
+                                                    ", args = " + Arrays.toString(args));
                                         }
                                 }
                                 return method.invoke(iNotificationManager, args);
