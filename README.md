@@ -46,4 +46,6 @@ dependencies {
 
 ## Compatibility
 
-If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs(fixed). We'd better remove ReToast from the app.
+If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs(Has been fixed on platforms where the app is compatible).
+We'd better remove ReToast from the app.
+In this case, the library will throw a `UnsupportedOperationException` in order to remind us to remove it.
