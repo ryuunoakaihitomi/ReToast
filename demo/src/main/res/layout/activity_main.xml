@@ -29,7 +29,15 @@
         android:id="@+id/btn_background_toast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="debug: Background Toast" />
+        android:text="debug: Background Toast"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_cancel_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="debug: Cancel Toast"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btn_disable_rt"
