@@ -50,7 +50,7 @@ final class ReToast {
      * This method is very expensive as it relies heavily on reflection.
      */
     @SuppressWarnings("JavaReflectionMemberAccess")
-    static void installSync() {
+    private static void installSync() {
         try {
             @SuppressLint({"DiscouragedPrivateApi", "SoonBlockedPrivateApi"})
             Method getService = Toast.class.getDeclaredMethod("getService");
