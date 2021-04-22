@@ -106,7 +106,7 @@ final class ReToast {
             sService.setAccessible(true);
             sService.set(null, iNotificationManagerProxy);
         } catch (Throwable e) {
-            if (DEBUG) Log.e(TAG, "install", e);
+            if (DEBUG) Log.e(TAG, "installSync", e);
         }
     }
 
