@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 final class ReToast {
@@ -31,10 +32,12 @@ final class ReToast {
     static void install() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (Runtime.getRuntime().availableProcessors() > 1) {
-                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                final ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(new Runnable() {
                     @Override
                     public void run() {
                         installSync();
+                        executorService.shutdown();
                         if (DEBUG) Log.i(TAG, "run: Done.");
                     }
                 });
@@ -70,9 +73,8 @@ final class ReToast {
                                     args[0] = sysPkgName;
                                     break;
                                 case "enqueueToast":
-                                    int duration = (int) args[2];
                                     if (DEBUG)
-                                        Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + (duration == Toast.LENGTH_SHORT ? "short" : "long"));
+                                        Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + ((int) args[2] == Toast.LENGTH_SHORT ? "short" : "long"));
                                     args[0] = sysPkgName;
                                     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                         final Object tn = args[1];
