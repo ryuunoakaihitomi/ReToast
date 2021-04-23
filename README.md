@@ -1,8 +1,10 @@
 # ReToast
 
+## Introduction
+
 This Android library is used to fix some serious bugs of `android.widget.Toast` with the easiest way.
 
-## Introduction
+## Details
 
 **What bugs does it fix?**
 
@@ -25,7 +27,7 @@ This Android library is used to fix some serious bugs of `android.widget.Toast` 
 Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large projects.
 
 Unlike them, this library is globally effective and uses [`ContentProvider.onCreate()`](https://developer.android.com/reference/android/content/ContentProvider#onCreate()) to automatically initialize in order to make less invasive.
-We can continue doing all our work just like before.
+We can continue doing all our other work just like before.
 
 ## Usage
 
@@ -35,11 +37,11 @@ Import the library in app(module-level) build.gradle:
 dependencies {
     repositories {
         maven {
-            url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master'
+            url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master' // 👈
         }
     }
-    implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
-    ...
+    implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
+    // ...
 ```
 
 **THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast) or other fancy Toast-based UI libraries as before, but there's no need to worry about the bugs anymore.
