@@ -18,8 +18,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 final class ReToast {
 
@@ -32,15 +30,13 @@ final class ReToast {
     static void install() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (Runtime.getRuntime().availableProcessors() > 1) {
-                final ExecutorService executorService = Executors.newSingleThreadExecutor();
-                executorService.execute(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
                         installSync();
-                        executorService.shutdown();
                         if (DEBUG) Log.i(TAG, "run: Done.");
                     }
-                });
+                }).start();
             } else {
                 installSync();
                 if (DEBUG)
