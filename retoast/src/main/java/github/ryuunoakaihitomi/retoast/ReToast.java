@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
@@ -30,12 +29,9 @@ final class ReToast {
     static void install() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (Runtime.getRuntime().availableProcessors() > 1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        installSync();
-                        if (DEBUG) Log.i(TAG, "run: Done.");
-                    }
+                new Thread(() -> {
+                    installSync();
+                    if (DEBUG) Log.i(TAG, "run: Done.");
                 }).start();
             } else {
                 installSync();
@@ -59,50 +55,42 @@ final class ReToast {
             Object iNotificationManagerProxy = Proxy.newProxyInstance(
                     Thread.currentThread().getContextClassLoader(),
                     new Class[]{Class.forName("android.app.INotificationManager")},
-                    new InvocationHandler() {
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                            final String methodName = method.getName(), sysPkgName = "android";
-                            switch (methodName) {
-                                case "cancelToast":
-                                    if (DEBUG) Log.d(TAG, "cancel, pkg = " + args[0]);
-                                    args[0] = sysPkgName;
-                                    break;
-                                case "enqueueToast":
-                                    if (DEBUG)
-                                        Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + ((int) args[2] == Toast.LENGTH_SHORT ? "short" : "long"));
-                                    args[0] = sysPkgName;
-                                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
-                                        final Object tn = args[1];
-                                        Looper mainLooper = Looper.getMainLooper();
-                                        if (!mainLooper.isCurrentThread()) {
-                                            if (DEBUG)
-                                                Log.i(TAG, "Toast.show() is not in main thread.");
-                                            new Handler(mainLooper).post(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    hookTn(tn);
-                                                }
-                                            });
-                                        } else {
-                                            hookTn(tn);
-                                        }
+                    (proxy, method, args) -> {
+                        final String methodName = method.getName(), sysPkgName = "android";
+                        switch (methodName) {
+                            case "cancelToast":
+                                if (DEBUG) Log.d(TAG, "cancel, pkg = " + args[0]);
+                                args[0] = sysPkgName;
+                                break;
+                            case "enqueueToast":
+                                if (DEBUG)
+                                    Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + ((int) args[2] == Toast.LENGTH_SHORT ? "short" : "long"));
+                                args[0] = sysPkgName;
+                                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
+                                    final Object tn = args[1];
+                                    Looper mainLooper = Looper.getMainLooper();
+                                    if (!mainLooper.isCurrentThread()) {
+                                        if (DEBUG)
+                                            Log.i(TAG, "Toast.show() is not in main thread.");
+                                        new Handler(mainLooper).post(() -> hookTn(tn));
+                                    } else {
+                                        hookTn(tn);
                                     }
-                                    break;
-                                default:
-                                    if (DEBUG) {
-                                        Log.d(TAG, "proxy: methodName = " + methodName +
-                                                ", args = " + Arrays.toString(args));
-                                    }
-                            }
-                            return method.invoke(iNotificationManager, args);
+                                }
+                                break;
+                            default:
+                                if (DEBUG) {
+                                    Log.d(TAG, "proxy: methodName = " + methodName +
+                                            ", args = " + Arrays.toString(args));
+                                }
                         }
+                        return method.invoke(iNotificationManager, args);
                     });
             Field sService = Toast.class.getDeclaredField("sService");
             sService.setAccessible(true);
             sService.set(null, iNotificationManagerProxy);
         } catch (Throwable e) {
-            if (DEBUG) Log.e(TAG, "installSync", e);
+            Log.e(TAG, "installSync", e);
         }
     }
 
@@ -113,7 +101,7 @@ final class ReToast {
             mHandler.setAccessible(true);
             mHandler.set(tn, new SafeHandlerProxy(tn, (Handler) mHandler.get(tn)));
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            if (DEBUG) Log.e(TAG, "hookTn", e);
+            Log.e(TAG, "hookTn", e);
         }
     }
 
