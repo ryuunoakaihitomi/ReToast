@@ -42,6 +42,7 @@ dependencies {
     }
     implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
     // ...
+}
 ```
 
 **THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast) or other fancy Toast-based UI libraries as before, but there's no need to worry about the bugs anymore.
@@ -51,4 +52,5 @@ dependencies {
 If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs, which have been fixed on platforms where the app is compatible.
 We'd better remove ReToast from the app.
 In this case, the library will throw a `UnsupportedOperationException` in order to remind us to remove it.
-Since Android 10, the vulnerability used by this library has also been fixed, so we just can't let it work on the newer platform any more.
+
+Since Android 10, the vulnerability used by this library has also been fixed, so we just can't let it work on the newer platforms any more. 😟
