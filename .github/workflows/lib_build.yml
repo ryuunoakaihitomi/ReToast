@@ -1,0 +1,42 @@
+name: Library Build CI
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+    - 'demo/**'
+    - 'README.md'
+    - 'LICENSE'
+    - '.gitignore'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Publish library
+      env:
+        GRADLE_VERSION: 6.7.1
+      run: |
+        gradle wrapper --gradle-version $GRADLE_VERSION
+        ./gradlew :retoast:publish
+        
+    - name: Upload repository
+      uses: actions/upload-artifact@v2
+      with:
+        name: publish-repo
+        path: local-mvn-repo
+
+    - name: Upload mappings
+      uses: actions/upload-artifact@v2
+      with:
+        name: mappings
+        path: retoast/build/outputs/mapping/release
