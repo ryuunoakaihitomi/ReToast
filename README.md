@@ -1,5 +1,7 @@
 # ReToast
 
+[![Library Build CI](https://github.com/ryuunoakaihitomi/ReToast/actions/workflows/lib_build.yml/badge.svg?branch=master)](https://github.com/ryuunoakaihitomi/ReToast/actions/workflows/lib_build.yml)
+
 ## Introduction
 
 This Android library is used to fix some serious bugs of `android.widget.Toast` with the easiest way.
