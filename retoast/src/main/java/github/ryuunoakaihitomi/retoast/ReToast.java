@@ -3,6 +3,8 @@ package github.ryuunoakaihitomi.retoast;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Application;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Debug;
 import android.os.Handler;
@@ -17,11 +19,26 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.Objects;
 
+@SuppressLint("PrivateApi")
 final class ReToast {
 
     private static final String TAG = "ReToast";
-    private static final boolean DEBUG = BuildConfig.DEBUG || Debug.isDebuggerConnected();
+    private static final boolean DEBUG;
+
+    static {
+        boolean debug;
+        try {
+            Application app = (Application) Class.forName("android.app.ActivityThread").getMethod("currentApplication").invoke(null);
+            Objects.requireNonNull(app);
+            debug = (app.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0;
+        } catch (Exception e) {
+            debug = Debug.isDebuggerConnected();
+            Log.e(TAG, "static initializer", e);
+        }
+        DEBUG = debug;
+    }
 
     private ReToast() {
     }
@@ -51,7 +68,6 @@ final class ReToast {
             Method getService = Toast.class.getDeclaredMethod("getService");
             getService.setAccessible(true);
             final Object iNotificationManager = getService.invoke(null);
-            @SuppressLint("PrivateApi")
             Object iNotificationManagerProxy = Proxy.newProxyInstance(
                     Thread.currentThread().getContextClassLoader(),
                     new Class[]{Class.forName("android.app.INotificationManager")},

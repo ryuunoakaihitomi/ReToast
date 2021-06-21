@@ -20,6 +20,11 @@ public final class _Initializer extends ContentProvider {
 
     private static final String TAG = "ReToast_Initializer";
 
+    // @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void main(String[] args) {
+        ReToast.install();
+    }
+
     @Override
     public boolean onCreate() {
 //        Debug.startMethodTracing();
