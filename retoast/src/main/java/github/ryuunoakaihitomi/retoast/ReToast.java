@@ -32,7 +32,7 @@ final class ReToast {
         try {
             Application app = (Application) Class.forName("android.app.ActivityThread").getMethod("currentApplication").invoke(null);
             Objects.requireNonNull(app);
-            debug = (app.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0;
+            debug = (app.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) > 0;
         } catch (Exception e) {
             debug = Debug.isDebuggerConnected();
             Log.e(TAG, "static initializer", e);
