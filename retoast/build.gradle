@@ -18,4 +18,8 @@ android {
     }
 }
 
+dependencies {
+    lintPublish project(':retoast-lint')
+}
+
 apply from: 'maven-release.gradle'

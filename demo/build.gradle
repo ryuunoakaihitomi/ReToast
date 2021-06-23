@@ -17,8 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
+    lintOptions {
+        textReport true
+    }
 }
 
 dependencies {
+    //noinspection ReToastImportWay
     implementation project(':retoast')
 }

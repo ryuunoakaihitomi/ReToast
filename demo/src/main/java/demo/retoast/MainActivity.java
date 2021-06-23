@@ -1,5 +1,6 @@
 package demo.retoast;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import github.ryuunoakaihitomi.retoast._Initializer;
 
 public class MainActivity extends Activity {
 
+    @SuppressLint("ReToastInitializerCalling")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

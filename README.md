@@ -43,7 +43,7 @@ dependencies {
             url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master' // 👈
         }
     }
-    implementation 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
+    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
     // ...
 }
 ```
