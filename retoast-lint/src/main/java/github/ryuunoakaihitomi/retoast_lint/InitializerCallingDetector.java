@@ -29,7 +29,7 @@ import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.logEmptyLine;
 @SuppressWarnings("UnstableApiUsage")
 public class InitializerCallingDetector extends Detector implements SourceCodeScanner {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     @SuppressWarnings("SpellCheckingInspection")
     private static final String LIBRARY_INITIALIZER_CLASS_NAME = "github.ryuunoakaihitomi.retoast._Initializer";

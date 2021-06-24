@@ -21,11 +21,12 @@ import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
 @SuppressWarnings("UnstableApiUsage")
 public class LibraryImportDetector extends Detector implements GradleScanner {
 
+    public static final boolean DEBUG = false;
+
     private static final Implementation IMPLEMENTATION = new Implementation(
             LibraryImportDetector.class, Scope.GRADLE_SCOPE
     );
 
-    public static final boolean DEBUG = true;
     static final Issue ISSUE_ENV = Issue.create(
             "ReToastImportEnvironment",
             "ReToast in here is unusable.",

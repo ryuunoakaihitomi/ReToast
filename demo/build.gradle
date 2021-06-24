@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-
+    //noinspection ReToastImportWay
     implementation project(':retoast')
 }
