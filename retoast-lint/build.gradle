@@ -1,11 +1,20 @@
 plugins {
     id 'java-library'
+    id 'com.android.lint'
 }
 
 dependencies {
+    // lintVersion = gradlePluginVersion + 23.0.0
+    // https://github.com/googlesamples/android-custom-lint-rules
     def lintVersion = '27.1.2'
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
     compileOnly "com.android.tools.lint:lint-checks:$lintVersion"
+}
+
+lintOptions {
+    htmlReport false
+    xmlReport false
+    textReport true
 }
 
 java {

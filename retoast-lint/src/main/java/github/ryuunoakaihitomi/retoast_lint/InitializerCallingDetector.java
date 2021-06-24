@@ -18,32 +18,38 @@ import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UClassLiteralExpression;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UImportStatement;
+import org.jetbrains.uast.util.UastExpressionUtils;
 
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
+
+import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
+import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.logEmptyLine;
 
 @SuppressWarnings("UnstableApiUsage")
 public class InitializerCallingDetector extends Detector implements SourceCodeScanner {
 
+    public static final boolean DEBUG = true;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final String LIBRARY_INITIALIZER_CLASS_NAME = "github.ryuunoakaihitomi.retoast._Initializer";
     static final Issue ISSUE = Issue.create(
             "ReToastInitializerCalling",
-            "The initializer class of ReToast has been called accidentally.",
-            "It is a `ContentProvider` just used to automatically initialize.\n" +
+            "You should not call ReToast initializer.",
+            "The initializer class of `ReToast` has been called accidentally. " +
+                    "It is a `ContentProvider` just used to automatically initialize.\n" +
                     "**Not for developer!**",
             Category.CORRECTNESS, 6, Severity.WARNING,
             new Implementation(InitializerCallingDetector.class, Scope.JAVA_FILE_SCOPE))
             .addMoreInfo("https://developer.android.com/reference/android/content/ContentProvider?hl=en#onCreate()")
             .setAndroidSpecific(true);
 
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String LIBRARY_INITIALIZER_CLASS_NAME = "github.ryuunoakaihitomi.retoast._Initializer";
-
-    private static final boolean DEBUG = false;
-
     @Nullable
     @Override
     public List<Class<? extends UElement>> getApplicableUastTypes() {
+        if (DEBUG) {
+            log("getApplicableUastTypes() called.");
+        }
         return Arrays.asList(UImportStatement.class, UCallExpression.class, UClassLiteralExpression.class, UClass.class);
     }
 
@@ -59,16 +65,14 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
              */
             @Override
             public void visitClass(@NotNull UClass node) {
-                if (DEBUG) {
-                    PrintStream p = System.out;
-                    p.println("DEBUG: visitClass() node output...");
-                    String[] split = node.asRenderString().split(System.lineSeparator());
-                    int len = split.length;
-                    for (int i = 0; i < len; i++) {
-                        p.println("" + i + "\t|" + split[i]);
-                    }
-                    p.println();
+                log("visitClass() called.");
+                String[] split = node.asRenderString().split(System.lineSeparator());
+                int len = split.length;
+                log(node.getContainingFile().getName() + ", LOC = " + len);
+                for (int i = 0; i < len; i++) {
+                    log("" + i + "\t| " + split[i]);
                 }
+                logEmptyLine();
             }
 
             /**
@@ -96,6 +100,16 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
              */
             @Override
             public void visitCallExpression(@NotNull UCallExpression node) {
+                if (DEBUG) {
+                    String s = node.asRenderString();
+                    boolean isMultiLine = s.split(System.lineSeparator()).length > 1;
+                    if (UastExpressionUtils.isMethodCall(node)) {
+                        log(s + " is a method call.", isMultiLine);
+                    }
+                    if (UastExpressionUtils.isConstructorCall(node)) {
+                        log(s + " is a constructor call.", isMultiLine);
+                    }
+                }
                 if (verify(node.getClassReference()) || verify(node.getReceiver())) {
                     report(node);
                 }
@@ -107,7 +121,7 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
 
             private void report(UElement scope) {
                 Location location = context.getLocation(scope);
-                context.report(ISSUE, scope, location, "ReToast's initializer is not for you.",
+                context.report(ISSUE, scope, location, "`ReToast`'s initializer is not for you",
                         fix().name("Remove ReToast calling statement(s)").replace().range(location).build());
             }
         };
