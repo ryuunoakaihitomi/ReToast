@@ -65,6 +65,7 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
              */
             @Override
             public void visitClass(@NotNull UClass node) {
+                if (!DEBUG) return;
                 log("visitClass() called.");
                 String[] split = node.asRenderString().split(System.lineSeparator());
                 int len = split.length;

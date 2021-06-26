@@ -61,7 +61,7 @@ public class ToastUsageDetector extends Detector implements ClassScanner {
     public void afterCheckRootProject(@NotNull Context context) {
         if (mCount == 0) {
             context.log(null,
-                    "ReToast lint: This project does not seem to use android.widget.Toast effectively...");
+                    "ReToast: This project does not seem to use android.widget.Toast effectively...");
         } else if (DEBUG) {
             CommonUtils.log("This project has " + mCount + " Toast usage.");
         }
