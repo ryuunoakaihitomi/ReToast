@@ -23,6 +23,10 @@ public class LibraryImportDetector extends Detector implements GradleScanner {
 
     public static final boolean DEBUG = false;
 
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final String LIBRARY_GROUP_ID = "github.ryuunoakaihitomi.retoast";
+    //    private static final String LIBRARY_GROUP_ID = ":retoast";
+
     private static final Implementation IMPLEMENTATION = new Implementation(
             LibraryImportDetector.class, Scope.GRADLE_SCOPE
     );
@@ -36,10 +40,6 @@ public class LibraryImportDetector extends Detector implements GradleScanner {
             .addMoreInfo("https://github.com/ryuunoakaihitomi/ReToast#compatibility")
             .setEnabledByDefault(true);
 
-
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String LIBRARY_GROUP_ID = "github.ryuunoakaihitomi.retoast";
-    //    private static final String LIBRARY_GROUP_ID = ":retoast";
     static final Issue ISSUE_WAY = Issue.create(
             "ReToastImportWay",
             "Please use \"runtimeOnly\" to import ReToast.",
