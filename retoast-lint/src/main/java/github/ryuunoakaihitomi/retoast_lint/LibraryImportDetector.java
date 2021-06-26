@@ -21,7 +21,7 @@ import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
 @SuppressWarnings("UnstableApiUsage")
 public class LibraryImportDetector extends Detector implements GradleScanner {
 
-    public static final boolean DEBUG = false;
+    private static final boolean DEBUG = false;
 
     @SuppressWarnings("SpellCheckingInspection")
     private static final String LIBRARY_GROUP_ID = "github.ryuunoakaihitomi.retoast";

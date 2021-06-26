@@ -28,6 +28,7 @@ public class MyRegistry extends IssueRegistry {
         return Arrays.asList(
                 LibraryImportDetector.ISSUE_WAY,
                 LibraryImportDetector.ISSUE_ENV,
-                InitializerCallingDetector.ISSUE);
+                InitializerCallingDetector.ISSUE,
+                ToastUsageDetector.ISSUE);
     }
 }
