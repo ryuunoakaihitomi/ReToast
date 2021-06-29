@@ -57,3 +57,8 @@ We'd better remove ReToast from the app.
 In this case, the library will throw a `UnsupportedOperationException` in order to remind us to remove it.
 
 Since Android 10, the vulnerability used by this library has also been fixed, so we just can't let it work on the newer platforms any more. 😟
+
+## Lint
+ReToast also ships with some embedded lint rules to guide us use it in the right way as much as possible.
+However, there is no guarantee that these rules function properly.
+Documents are always the most reliable.

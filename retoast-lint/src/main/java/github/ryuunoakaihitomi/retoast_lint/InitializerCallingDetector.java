@@ -33,6 +33,7 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
 
     @SuppressWarnings("SpellCheckingInspection")
     private static final String LIBRARY_INITIALIZER_CLASS_NAME = "github.ryuunoakaihitomi.retoast._Initializer";
+
     static final Issue ISSUE = Issue.create(
             "ReToastInitializerCalling",
             "You should not call ReToast initializer.",
