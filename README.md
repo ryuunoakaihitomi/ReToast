@@ -60,5 +60,5 @@ Since Android 10, the vulnerability used by this library has also been fixed, so
 
 ## Lint
 ReToast also ships with some embedded lint rules to guide us use it in the right way as much as possible.
-However, there is no guarantee that these rules function properly.
-Documents are always the most reliable.
+However, there is no guarantee that these rules will function properly all the time.
+Documentations are always the most reliable.
