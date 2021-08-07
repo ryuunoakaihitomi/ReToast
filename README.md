@@ -52,11 +52,15 @@ dependencies {
 
 ## Compatibility
 
-If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs, which have been fixed on platforms where the app is compatible.
-We'd better remove ReToast from the app.
-In this case, the library will throw a `UnsupportedOperationException` in order to remind us to remove it.
+If the app's minSdkVersion >= API Level 29, it's almost impossible to encounter these bugs, which
+have been fixed on platforms where the app is compatible (Tested on Android 10 and 11 release). We'd
+better remove ReToast from the app. In this case, the library will throw
+a `UnsupportedOperationException` in order to remind us to remove it.
 
-Since Android 10, the vulnerability used by this library has also been fixed, so we just can't let it work on the newer platforms any more. 😟
+Since Android 10, the vulnerability used by this library does have also
+been [fixed](https://cs.android.com/android/_/android/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
+, so even if these ~~features~~ bugs reappear, we just cannot let it work on the newer platforms any
+more. 😟
 
 ## Lint
 ReToast also ships with some embedded lint rules to guide us use it in the right way as much as possible.

@@ -61,10 +61,10 @@ final class ReToast {
     /**
      * This method is very expensive as it relies heavily on reflection.
      */
-    @SuppressWarnings("JavaReflectionMemberAccess")
+    @SuppressWarnings({"JavaReflectionMemberAccess", "SoonBlockedPrivateApi"})
     private static void installSync() {
         try {
-            @SuppressLint({"DiscouragedPrivateApi", "SoonBlockedPrivateApi"})
+            @SuppressLint("DiscouragedPrivateApi")
             Method getService = Toast.class.getDeclaredMethod("getService");
             getService.setAccessible(true);
             final Object iNotificationManager = getService.invoke(null);
@@ -72,16 +72,16 @@ final class ReToast {
                     Thread.currentThread().getContextClassLoader(),
                     new Class[]{Class.forName("android.app.INotificationManager")},
                     (proxy, method, args) -> {
-                        final String methodName = method.getName(), sysPkgName = "android";
+                        final String methodName = method.getName(), /* PackageManagerService. */ PLATFORM_PACKAGE_NAME = "android";
                         switch (methodName) {
                             case "cancelToast":
                                 if (DEBUG) Log.d(TAG, "cancel, pkg = " + args[0]);
-                                args[0] = sysPkgName;
+                                args[0] = PLATFORM_PACKAGE_NAME;
                                 break;
                             case "enqueueToast":
                                 if (DEBUG)
                                     Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + ((int) args[2] == Toast.LENGTH_SHORT ? "short" : "long"));
-                                args[0] = sysPkgName;
+                                args[0] = PLATFORM_PACKAGE_NAME;
                                 if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                     final Object tn = args[1];
                                     Looper mainLooper = Looper.getMainLooper();
@@ -145,7 +145,6 @@ final class ReToast {
         }
 
         private void logUnsafeContext() {
-            if (!DEBUG) return;
             try {
                 final Field mNextView = mAssociatedTn.getClass().getDeclaredField("mNextView");
                 mNextView.setAccessible(true);
@@ -162,8 +161,10 @@ final class ReToast {
 
         @Override
         public void handleMessage(Message msg) {
-            if (DEBUG) Log.d(TAG, "handleMessage: action = " + getActionString(msg.what));
-            logUnsafeContext();
+            if (DEBUG) {
+                Log.d(TAG, "handleMessage: action = " + getActionString(msg.what));
+                logUnsafeContext();
+            }
             try {
                 mHandler.handleMessage(msg);
             } catch (WindowManager.BadTokenException e) {
