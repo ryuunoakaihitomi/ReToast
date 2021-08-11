@@ -19,10 +19,14 @@ android {
     }
     lintOptions {
         textReport true
+
+        /* It is only for the convenience of checking Toasts' behavior with or without ReToast. */
+
+        disable 'ReToastImportWay'
+        disable 'ReToastInitializerCalling'
     }
 }
 
 dependencies {
-    //noinspection ReToastImportWay
     implementation project(':retoast')
 }
