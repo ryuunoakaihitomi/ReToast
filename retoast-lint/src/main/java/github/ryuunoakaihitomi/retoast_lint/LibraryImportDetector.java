@@ -1,5 +1,7 @@
 package github.ryuunoakaihitomi.retoast_lint;
 
+import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
+
 import com.android.sdklib.AndroidVersion;
 import com.android.tools.lint.detector.api.Category;
 import com.android.tools.lint.detector.api.Detector;
@@ -15,8 +17,6 @@ import com.sun.tools.javac.util.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
 
 @SuppressWarnings("UnstableApiUsage")
 public class LibraryImportDetector extends Detector implements GradleScanner {
@@ -61,7 +61,7 @@ public class LibraryImportDetector extends Detector implements GradleScanner {
                 if (!StringUtils.toLowerCase(property).contains("runtimeonly")) {
                     Location location = context.getLocation(propertyCookie);
                     context.report(ISSUE_WAY, location,
-                            "...`runTimeOnly <ReToast>`",
+                            "...`runtimeOnly <ReToast>`",
                             // Because composite() on replace() doesn't seems to work,
                             // so we have to only process this most common situation.
                             fix().name("Replace with \"runtimeOnly\"").replace()

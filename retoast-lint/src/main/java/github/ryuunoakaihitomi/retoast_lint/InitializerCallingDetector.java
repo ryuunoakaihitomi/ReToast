@@ -1,5 +1,8 @@
 package github.ryuunoakaihitomi.retoast_lint;
 
+import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
+import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.logEmptyLine;
+
 import com.android.tools.lint.client.api.UElementHandler;
 import com.android.tools.lint.detector.api.Category;
 import com.android.tools.lint.detector.api.Detector;
@@ -22,9 +25,6 @@ import org.jetbrains.uast.util.UastExpressionUtils;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.log;
-import static github.ryuunoakaihitomi.retoast_lint.CommonUtils.logEmptyLine;
 
 @SuppressWarnings("UnstableApiUsage")
 public class InitializerCallingDetector extends Detector implements SourceCodeScanner {
@@ -124,7 +124,7 @@ public class InitializerCallingDetector extends Detector implements SourceCodeSc
             private void report(UElement scope) {
                 Location location = context.getLocation(scope);
                 context.report(ISSUE, scope, location, "`ReToast`'s initializer is not for you",
-                        fix().name("Remove ReToast calling statement(s)").replace().range(location).build());
+                        fix().name("Remove ReToast calling statement").replace().range(location).build());
             }
         };
     }

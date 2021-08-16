@@ -29,7 +29,7 @@ public class ToastUsageDetector extends Detector implements ClassScanner {
      * Only for launching this {@link Detector}.
      */
     static final Issue ISSUE = Issue.create(
-            "NoToastUsage", "", "",
+            "ReToastNoToastUsage", "", "",
             Category.MESSAGES, 1, Severity.INFORMATIONAL,
             new Implementation(ToastUsageDetector.class, Scope.CLASS_FILE_SCOPE))
             .setAndroidSpecific(true);
