@@ -33,7 +33,13 @@ task copyDependencyJar(type: Copy) {
 }
 
 task obfuscateJar(type: ProGuardTask, dependsOn: 'jar') {
-    def sdkDir = new PropertyResourceBundle(new FileReader("$rootDir/local.properties")).getString('sdk.dir')
+
+    String sdkDir
+    try {
+        sdkDir = new PropertyResourceBundle(new FileReader("$rootDir/local.properties")).getString('sdk.dir')
+    } catch (FileNotFoundException ignored) {
+        sdkDir = System.getenv("ANDROID_SDK_ROOT")
+    }
     def androidJar = "$sdkDir/platforms/android-${rootProject.ext.compileSdkVersion}/android.jar"
     libraryjars androidJar
 
