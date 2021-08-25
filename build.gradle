@@ -4,12 +4,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.guardsquare:proguard-gradle:7.1.1'
     }
-}
-
-plugins {
-    id 'maven-publish'
 }
 
 allprojects {

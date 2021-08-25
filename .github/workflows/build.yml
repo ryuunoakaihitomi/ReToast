@@ -1,4 +1,4 @@
-name: Library Build CI
+name: Build CI
 
 on:
   push:
@@ -22,21 +22,18 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Publish library
+    - name: Build
       env:
         GRADLE_VERSION: 7.0.2
       run: |
         gradle wrapper --gradle-version $GRADLE_VERSION
-        ./gradlew :retoast:publish
-        
-    - name: Upload repository
-      uses: actions/upload-artifact@v2
-      with:
-        name: publish-repo
-        path: local-mvn-repo
+        ./gradlew :retoast:publish demo:assembleDebug
 
-    - name: Upload mappings
+    - name: Upload
       uses: actions/upload-artifact@v2
       with:
-        name: mappings
-        path: retoast/build/outputs/mapping/release
+        name: ReToast-products
+        path: |
+          local-mvn-repo
+          retoast/build/outputs/mapping/release
+          demo/build/outputs/apk/debug/demo-debug.apk

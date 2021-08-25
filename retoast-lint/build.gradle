@@ -1,6 +1,12 @@
+import proguard.gradle.ProGuardTask
+
 plugins {
     id 'java-library'
     id 'com.android.lint'
+}
+
+configurations {
+    cp
 }
 
 dependencies {
@@ -9,12 +15,57 @@ dependencies {
     def lintVersion = '27.1.2'
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
     compileOnly "com.android.tools.lint:lint-checks:$lintVersion"
+
+    cp "com.android.tools.lint:lint-api:$lintVersion"
 }
 
 lintOptions {
     htmlReport false
     xmlReport false
     textReport true
+}
+
+final def exportDepJarsPath = "$buildDir/depJars"
+
+task copyDependencyJar(type: Copy) {
+    from configurations.cp
+    into exportDepJarsPath
+}
+
+task obfuscateJar(type: ProGuardTask, dependsOn: 'jar') {
+    def sdkDir = new PropertyResourceBundle(new FileReader("$rootDir/local.properties")).getString('sdk.dir')
+    def androidJar = "$sdkDir/platforms/android-${rootProject.ext.compileSdkVersion}/android.jar"
+    libraryjars androidJar
+
+    dependsOn 'copyDependencyJar'
+    libraryjars exportDepJarsPath
+
+    def libDir = "$buildDir/libs"
+    def src = 'retoast-lint.jar'
+    def obfuscated = 'obf.jar'
+    def srcJar = "$libDir/$src"
+    def outJar = "$libDir/$obfuscated"
+
+    injars srcJar
+    outjars outJar
+    configuration 'proguard-rules.pro'
+
+    doLast {
+        delete srcJar
+        copy {
+            from libDir
+            include obfuscated
+            into libDir
+            rename obfuscated, src
+        }
+        delete outJar
+    }
+}
+
+obfuscateJar.outputs.upToDateWhen { false }
+
+afterEvaluate {
+    jar.finalizedBy(obfuscateJar)
 }
 
 java {

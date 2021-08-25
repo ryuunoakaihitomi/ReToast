@@ -13,7 +13,7 @@ import com.android.tools.lint.detector.api.Location;
 import com.android.tools.lint.detector.api.Project;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
-import com.sun.tools.javac.util.StringUtils;
+import com.intellij.openapi.util.text.StringUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +58,7 @@ public class LibraryImportDetector extends Detector implements GradleScanner {
 
                 // debugRuntimeOnly etc.
                 //noinspection SpellCheckingInspection
-                if (!StringUtils.toLowerCase(property).contains("runtimeonly")) {
+                if (!StringUtil.toLowerCase(property).contains("runtimeonly")) {
                     Location location = context.getLocation(propertyCookie);
                     context.report(ISSUE_WAY, location,
                             "...`runtimeOnly <ReToast>`",

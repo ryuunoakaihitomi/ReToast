@@ -1,0 +1,2 @@
+-keep class * extends com.android.tools.lint.client.api.IssueRegistry
+-overloadaggressively

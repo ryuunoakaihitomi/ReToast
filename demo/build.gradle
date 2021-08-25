@@ -6,7 +6,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "demo.retoast"
+        applicationId 'demo.retoast'
+        versionName getGitCommitShortId()
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
     }
@@ -29,4 +30,13 @@ android {
 
 dependencies {
     implementation project(':retoast')
+}
+
+def getGitCommitShortId() {
+    try {
+        return 'git rev-parse --short HEAD'.execute().text.trim()
+    } catch (IOException e) {
+        logger.lifecycle("Git not installed", e)
+        return "unkn0wn"
+    }
 }
