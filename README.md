@@ -11,11 +11,11 @@ This Android library is used to fix some serious bugs of `android.widget.Toast` 
 
 **What bugs does it fix?**
 
-* before 10 (29): Notification Permission
+* before 10 (<29): Notification Permission
 
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
-* from 8.1(27) to 9.0(28): Rate Limit
+* from 8.1 to 9.0 (27-28): Rate Limit
 
 [Each package can enqueue one toast at a time.](https://android.googlesource.com/platform/frameworks/base/+/4ee785b698211b5ccce104e226b073ffbb12df55)
 
@@ -59,10 +59,18 @@ a `UnsupportedOperationException` in order to remind us to remove it.
 
 Since Android 10, the vulnerability used by this library does have also
 been [fixed](https://cs.android.com/android/_/android/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
-, so even if these ~~features~~ bugs reappear, we just cannot let it work on the newer platforms any
+, so even if these ~~features~~<sup id="further_compatibility">[1](#rate-limit)</sup> bugs reappear, we just cannot let it work on the newer platforms any
 more. 😟
 
 ## Lint
 ReToast also ships with some embedded lint rules to guide us use it in the right way as much as possible.
 However, there is no guarantee that these rules will function properly all the time.
 Documentations are always the most reliable.
+
+---
+
+<!-- https://stackoverflow.com/questions/25579868/how-to-add-footnotes-to-github-flavoured-markdown -->
+
+<b id="rate-limit"><sup>[1](#further_compatibility)</sup> </b><sub>Android 12 did bring back rate limit for all apps, the compatibility change is [RATE_LIMIT_TOASTS](https://developer.android.com/about/versions/12/reference/compat-framework-changes#rate_limit_toasts). </sub>
+
+---
