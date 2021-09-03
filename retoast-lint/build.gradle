@@ -33,7 +33,6 @@ task copyDependencyJar(type: Copy) {
 }
 
 task obfuscateJar(type: ProGuardTask, dependsOn: 'jar') {
-
     String sdkDir
     try {
         sdkDir = new PropertyResourceBundle(new FileReader("$rootDir/local.properties")).getString('sdk.dir')
@@ -54,6 +53,7 @@ task obfuscateJar(type: ProGuardTask, dependsOn: 'jar') {
 
     injars srcJar
     outjars outJar
+    printmapping 'build/mapping.txt'
     configuration 'proguard-rules.pro'
 
     doLast {
