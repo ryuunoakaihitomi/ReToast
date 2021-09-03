@@ -1,7 +1,7 @@
 # ReToast
 
 [![Build CI](https://github.com/ryuunoakaihitomi/ReToast/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/ryuunoakaihitomi/ReToast/actions/workflows/build.yml)
-![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fryuunoakaihitomi%2Fmaven-repository%2Fmaster%2Fgithub%2Fryuunoakaihitomi%2Fretoast%2Fretoast%2Fmaven-metadata.xml)
+[![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fryuunoakaihitomi%2Fmaven-repository%2Fmaster%2Fgithub%2Fryuunoakaihitomi%2Fretoast%2Fretoast%2Fmaven-metadata.xml)](https://github.com/ryuunoakaihitomi/maven-repository)
 
 ## Introduction
 
