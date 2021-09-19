@@ -79,8 +79,11 @@ final class ReToast {
                                 args[0] = PLATFORM_PACKAGE_NAME;
                                 break;
                             case "enqueueToast":
-                                if (DEBUG)
+                            case "enqueueToastEx":  // For some Huawei devices. (Tested on HUAWEI/PAR-AL00/HWPAR:8.1.0/HUAWEIPAR-AL00/113(C00):user/release-keys, EMUI 8.2.0)
+                                if (DEBUG) {
                                     Log.d(TAG, "enqueue, pkg = " + args[0] + ", duration = " + ((int) args[2] == Toast.LENGTH_SHORT ? "short" : "long"));
+//                                    Log.d(TAG, "enqueue -> methodName = " + methodName + ", FP: " + Build.FINGERPRINT);
+                                }
                                 args[0] = PLATFORM_PACKAGE_NAME;
                                 if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
                                     final Object tn = args[1];
