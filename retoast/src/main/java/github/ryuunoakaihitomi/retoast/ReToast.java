@@ -47,11 +47,11 @@ final class ReToast {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (Runtime.getRuntime().availableProcessors() > 1) {
                 new Thread(() -> {
-                    installSync();
+                    $();
                     if (DEBUG) Log.i(TAG, "run: Done.");
                 }).start();
             } else {
-                installSync();
+                $();
                 if (DEBUG)
                     Log.w(TAG, "install: Done. This operation could be a little slow without multi-core support.");
             }
@@ -62,7 +62,7 @@ final class ReToast {
      * This method is very expensive as it relies heavily on reflection.
      */
     @SuppressWarnings({"JavaReflectionMemberAccess", "SoonBlockedPrivateApi"})
-    private static void installSync() {
+    private static void $() {
         try {
             @SuppressLint("DiscouragedPrivateApi")
             Method getService = Toast.class.getDeclaredMethod("getService");
@@ -109,7 +109,7 @@ final class ReToast {
             sService.setAccessible(true);
             sService.set(null, iNotificationManagerProxy);
         } catch (Throwable e) {
-            Log.e(TAG, "installSync", e);
+            Log.e(TAG, "$", e);
         }
     }
 
