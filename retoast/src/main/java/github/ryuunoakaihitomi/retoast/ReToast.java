@@ -72,6 +72,13 @@ final class ReToast {
                     Thread.currentThread().getContextClassLoader(),
                     new Class[]{Class.forName("android.app.INotificationManager")},
                     (proxy, method, args) -> {
+                        assert iNotificationManager != null;
+                        if (Proxy.isProxyClass(iNotificationManager.getClass())) {
+                            Log.e(TAG, "!!!\n" +
+                                    "The system service that the library relies on has been manipulated before.\n" +
+                                    "While this situation has been handled, it may not be the behavior you want.");
+                            Proxy.getInvocationHandler(iNotificationManager).invoke(proxy, method, args);
+                        }
                         final String methodName = method.getName(), /* PackageManagerService. */ PLATFORM_PACKAGE_NAME = "android";
                         switch (methodName) {
                             case "cancelToast":
