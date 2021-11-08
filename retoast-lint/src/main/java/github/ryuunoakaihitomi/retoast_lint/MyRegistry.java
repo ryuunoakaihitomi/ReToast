@@ -4,6 +4,7 @@ import com.android.tools.lint.client.api.IssueRegistry;
 import com.android.tools.lint.client.api.Vendor;
 import com.android.tools.lint.detector.api.ApiKt;
 import com.android.tools.lint.detector.api.Issue;
+import com.google.auto.service.AutoService;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +12,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "unused"})
+@AutoService(IssueRegistry.class)
 public class MyRegistry extends IssueRegistry {
 
     @Nullable
