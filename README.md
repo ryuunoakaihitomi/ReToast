@@ -48,7 +48,35 @@ dependencies {
 }
 ```
 
-**THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast) or other fancy Toast-based UI libraries as before, but there's no need to worry about the bugs anymore.
+### For Android studio Arctic Fox 2020.3.1+
+
+If you encountered this error,
+> Build was configured to prefer settings repositories over project repositories but repository 'maven' was added by build file 'app\build.gradle'
+
+you have to perform it in two steps...
+
+① Import the maven repository in settings.gradle:
+
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        // 👇
+        maven {
+            url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master'
+        }
+    }
+}
+```
+
+② Import the library in app(module-level) build.gradle
+
+```groovy
+    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
+```
+
+**THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast)
+or other fancy Toast-based UI libraries as before, but there's no need to worry about the bugs
+anymore.
 
 ## Compatibility
 
