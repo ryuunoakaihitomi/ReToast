@@ -60,6 +60,7 @@ you have to perform it in two steps...
 ```groovy
 dependencyResolutionManagement {
     repositories {
+        // ...
         // 👇
         maven {
             url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master'
@@ -71,7 +72,10 @@ dependencyResolutionManagement {
 ② Import the library in app(module-level) build.gradle
 
 ```groovy
+dependencies {
+    // ...
     runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
+}
 ```
 
 **THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast)
