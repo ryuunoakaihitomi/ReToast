@@ -2,14 +2,14 @@ package demo.retoast;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.pm.PackageManager;
+import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.Button;
 import android.widget.Toast;
 
-import github.ryuunoakaihitomi.retoast._Initializer;
+import org.joor.Reflect;
 
 public class MainActivity extends Activity {
 
@@ -17,6 +17,19 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // There's no effect on Android 10 and after.
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Unsupported API level " + Build.VERSION.SDK_INT + " !")
+                    .setMessage("API level is greater than 28(Android 9.0). \n\n" +
+                            "Please read README.md carefully and run this demo on an older version of Android.")
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> finish())
+                    .setCancelable(false)
+                    .show();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
         final Button
@@ -52,11 +65,9 @@ public class MainActivity extends Activity {
             toastB.show();
         });
         disableReToastBrn.setOnClickListener(v -> {
-            // The way to DISABLE ReToast without removing the library. WE SHOULD NOT DO THIS!
-            getPackageManager().setComponentEnabledSetting(
-                    new ComponentName(getApplication(), _Initializer.class),
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP);
+            Toast.makeText(getBaseContext(), "ReToast has been temporarily disabled.\nForce stop and restart this app, it will take effect again.", Toast.LENGTH_LONG).show();
+            // Clear the proxy notification service.
+            Reflect.onClass(Toast.class).set("sService", null);
         });
     }
 }

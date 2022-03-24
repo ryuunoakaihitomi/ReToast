@@ -20,16 +20,12 @@ android {
     }
     lintOptions {
         textReport true
-
-        /* It is only for the convenience of checking Toasts' behavior with or without ReToast. */
-
-        disable 'ReToastImportWay'
-        disable 'ReToastInitializerCalling'
     }
 }
 
 dependencies {
-    implementation project(':retoast')
+    runtimeOnly project(':retoast')
+    implementation 'org.jooq:joor-java-6:0.9.14'
 }
 
 def getGitCommitShortId() {
