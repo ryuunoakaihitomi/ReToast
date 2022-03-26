@@ -44,7 +44,7 @@ dependencies {
             url 'https://maven.pkg.github.com/ryuunoakaihitomi/ReToast'
             credentials {
                 username = 'ryuunoakaihitomi'
-                password = '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'
+                password = 'ghp_extQ2D8b8NztcmmUyMzngcthP2VYJm0cEGS\u0020'
             }
         }
     }
@@ -71,7 +71,7 @@ dependencyResolutionManagement {
             url 'https://maven.pkg.github.com/ryuunoakaihitomi/ReToast'
             credentials {
                 username = 'ryuunoakaihitomi'
-                password = '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'
+                password = 'ghp_extQ2D8b8NztcmmUyMzngcthP2VYJm0cEGS\u0020'
             }
         }
     }
