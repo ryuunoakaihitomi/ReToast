@@ -17,19 +17,19 @@
         android:id="@+id/btn_crowded_toasts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crowded Toasts" />
+        android:text="Crowded Toasts x 5" />
 
     <Button
         android:id="@+id/btn_stuck_toast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stuck Toast" />
+        android:text="Stuck Toast (3s)" />
 
     <Button
         android:id="@+id/btn_background_toast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="debug: Background Toast"
+        android:text="debug: Background Toast after 5s"
         android:textAllCaps="false" />
 
     <Button
