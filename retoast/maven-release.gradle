@@ -44,14 +44,19 @@ afterEvaluate {
         }
         repositories {
             maven { url './../local-mvn-repo' }
-            maven {
-                name 'GitHubPackages'
-                url = GITHUB_PKG_PUBLISH_URL
-                credentials {
-                    username System.getenv('GITHUB_ACTOR')
-                    password System.getenv('GITHUB_TOKEN')
+
+            // https://docs.github.com/en/actions/learn-github-actions/environment-variables
+            if (System.getenv("PUBLISH_GP") == true.toString()) {
+                maven {
+                    name 'GitHubPackages'
+                    url = GITHUB_PKG_PUBLISH_URL
+                    credentials {
+                        username System.getenv('GITHUB_ACTOR')
+                        password System.getenv('GITHUB_TOKEN')
+                    }
                 }
             }
+
         }
     }
 }
