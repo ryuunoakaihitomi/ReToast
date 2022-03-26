@@ -42,6 +42,16 @@ afterEvaluate {
                 }
             }
         }
-        repositories { maven { url './../local-mvn-repo' } }
+        repositories {
+            maven { url './../local-mvn-repo' }
+            maven {
+                name 'GitHubPackages'
+                url = GITHUB_PKG_PUBLISH_URL
+                credentials {
+                    username System.getenv('GITHUB_ACTOR')
+                    password System.getenv('GITHUB_TOKEN')
+                }
+            }
+        }
     }
 }

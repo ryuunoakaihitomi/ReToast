@@ -25,6 +25,7 @@ jobs:
     - name: Build
       env:
         GRADLE_VERSION: 7.2
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gradle wrapper --gradle-version $GRADLE_VERSION
         ./gradlew :retoast:publish demo:assembleDebug
