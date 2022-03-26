@@ -39,8 +39,13 @@ Import the library in app(module-level) build.gradle:
 ```groovy
 dependencies {
     repositories {
+        // 👇
         maven {
-            url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master' // 👈
+            url 'https://maven.pkg.github.com/ryuunoakaihitomi/ReToast'
+            credentials {
+                username = 'ryuunoakaihitomi'
+                password = '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'
+            }
         }
     }
     runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
