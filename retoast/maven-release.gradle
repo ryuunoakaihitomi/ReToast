@@ -45,7 +45,6 @@ afterEvaluate {
         repositories {
             maven { url './../local-mvn-repo' }
 
-            // https://docs.github.com/en/actions/learn-github-actions/environment-variables
             if (System.getenv("PUBLISH_GP") == true.toString()) {
                 maven {
                     name 'GitHubPackages'
