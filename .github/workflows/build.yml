@@ -47,6 +47,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: startsWith(github.event.head_commit.message, '[release demo]')
       with:
+        tag_name: ${GITHUB_SHA::8}
         name: Demo debug apk
         body: 🍞
         files: |
