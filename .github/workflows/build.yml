@@ -42,3 +42,12 @@ jobs:
 
     - name: Show lint mapping
       run: cat ./retoast-lint/build/mapping.txt
+
+    - name: Release Demo
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.event.head_commit.message, '[release demo]')
+      with:
+        name: Demo debug apk
+        body: 🍞
+        files: |
+          demo/build/outputs/apk/debug/demo-debug.apk
