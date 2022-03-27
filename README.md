@@ -34,57 +34,10 @@ We can continue doing all our other work just like before.
 
 ## Usage
 
-Import the library in app(module-level) build.gradle:
+Check [this](https://github.com/ryuunoakaihitomi/maven-repository#usage) and replace the import statement to...
 
 ```groovy
-dependencies {
-    repositories {
-        // 👇
-        maven {
-            url 'https://maven.pkg.github.com/ryuunoakaihitomi/ReToast'
-            credentials {
-                username = 'ryuunoakaihitomi'
-                password = 'ghp_extQ2D8b8NztcmmUyMzngcthP2VYJm0cEGS\u0020'
-            }
-        }
-    }
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
-    // ...
-}
-```
-
-### For Android studio Arctic Fox 2020.3.1+
-
-If you encountered this error,
-> Build was configured to prefer settings repositories over project repositories but repository 'maven' was added by build file 'app\build.gradle'
-
-you have to perform it in two steps...
-
-① Import the maven repository in settings.gradle:
-
-```groovy
-dependencyResolutionManagement {
-    repositories {
-        // ...
-        // 👇
-        maven {
-            url 'https://maven.pkg.github.com/ryuunoakaihitomi/ReToast'
-            credentials {
-                username = 'ryuunoakaihitomi'
-                password = 'ghp_extQ2D8b8NztcmmUyMzngcthP2VYJm0cEGS\u0020'
-            }
-        }
-    }
-}
-```
-
-② Import the library in app(module-level) build.gradle
-
-```groovy
-dependencies {
-    // ...
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
-}
+runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
 ```
 
 **THAT'S ALL!** We can use [`Toast`](https://developer.android.com/reference/android/widget/Toast)
