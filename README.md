@@ -43,7 +43,7 @@ dependencies {
             url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master' // 👈
         }
     }
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release' // 👈
+    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:2.0.0' // 👈
     // ...
 }
 ```
@@ -74,7 +74,7 @@ dependencyResolutionManagement {
 ```groovy
 dependencies {
     // ...
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:latest.release'
+    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:2.0.0'
 }
 ```
 
