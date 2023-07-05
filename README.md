@@ -11,17 +11,17 @@ This Android library is used to fix some serious bugs of `android.widget.Toast` 
 
 **What bugs does it fix?**
 
-* before 10 (<29): Notification Permission
+- before 10 (<29): Notification Permission
 
 [Always allow toasts from foreground apps (The commit to fix).](https://android.googlesource.com/platform/frameworks/base/+/58b2453ed69197d765c7254241d9966ee49a3efb)
 
-* from 8.1 to 9.0 (27-28): Rate Limit
+- from 8.1 to 9.0 (27-28): Rate Limit
 
 [Each package can enqueue one toast at a time.](https://android.googlesource.com/platform/frameworks/base/+/4ee785b698211b5ccce104e226b073ffbb12df55)
 
 [Allow apps to queue multiple toast messages.](https://android.googlesource.com/platform/frameworks/base/+/a7ed0abe18556847e3cd6e1e4c03a29a0c96fb50)
 
-* 7.1 (25): BadTokenException
+- 7.1 (25): BadTokenException
 
 [Toast with UI stress causes crash.](https://android.googlesource.com/platform/frameworks/base/+/0df3702f533667a3825ecbce67db0853385a99ab)
 
@@ -29,7 +29,7 @@ This Android library is used to fix some serious bugs of `android.widget.Toast` 
 
 Most library that fix these bugs are invasive, so we have to replace all existing Toasts, it can be pretty messy in some large projects.
 
-Unlike them, this library is globally effective and uses [`ContentProvider.onCreate()`](https://developer.android.com/reference/android/content/ContentProvider#onCreate()) to automatically initialize in order to make less invasive (Initializing is almost instant).
+Unlike them, this library is globally effective and uses [`ContentProvider.onCreate()`](<https://developer.android.com/reference/android/content/ContentProvider#onCreate()>) to automatically initialize in order to make less invasive (Initializing is almost instant).
 We can continue doing all our other work just like before.
 
 ## Usage
@@ -43,7 +43,7 @@ dependencies {
             url 'https://raw.githubusercontent.com/ryuunoakaihitomi/maven-repository/master' // 👈
         }
     }
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:2.0.0' // 👈
+    implementation 'github.ryuunoakaihitomi.retoast:retoast:2.0.0' // 👈
     // ...
 }
 ```
@@ -51,6 +51,7 @@ dependencies {
 ### For Android studio Arctic Fox 2020.3.1+
 
 If you encountered this error,
+
 > Build was configured to prefer settings repositories over project repositories but repository 'maven' was added by build file 'app\build.gradle'
 
 you have to perform it in two steps...
@@ -74,7 +75,7 @@ dependencyResolutionManagement {
 ```groovy
 dependencies {
     // ...
-    runtimeOnly 'github.ryuunoakaihitomi.retoast:retoast:2.0.0'
+    implementation 'github.ryuunoakaihitomi.retoast:retoast:2.0.0'
 }
 ```
 
@@ -105,7 +106,7 @@ Documentations are always the most reliable.
 Inspired by these two articles (are all in Chinese), this library is made.
 These were supposed to be unrelated stuff, but I suddenly found the connection between them.
 
-[解决通知关闭Toast失效问题](https://blog.csdn.net/qq331710168/article/details/85320098)
+[解决通知关闭 Toast 失效问题](https://blog.csdn.net/qq331710168/article/details/85320098)
 
 [Android 7.X Toast Bug](https://www.jianshu.com/p/c8e00943afc9)
 
